@@ -17,7 +17,9 @@ app = Flask(__name__)
 datastore = store.DataStore()
 
 TILECOLORS = {}
-
+    
+HOST='localhost' #change to IP address to serve others
+PORT='5000'
 
 # https://gist.github.com/1094140
 def support_jsonp(f):
@@ -73,11 +75,10 @@ def refresh(state):
         datastore.update()
     return jsonify(result=True)
 
-
 @app.route('/map/<layer>/<cmap>/<vmin>/<vmax>')
 def draw(layer, cmap, vmin, vmax):
     TILECOLORS[layer] = (cmap, float(vmin), float(vmax))
-    return render_template('leaflet.html', host=socket.gethostname(), layer=layer)
+    return render_template('leaflet.html', host=HOST, layer=layer)
 
 
 @app.route('/sample/<layer>/<lat>/<lon>')
@@ -90,7 +91,7 @@ def sample(layer, lat, lon):
 
 def main():
     http_server = HTTPServer(WSGIContainer(app))
-    http_server.listen(5000)
+    http_server.listen(PORT)
     IOLoop.instance().start()
 
 

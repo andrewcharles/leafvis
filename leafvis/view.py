@@ -5,9 +5,9 @@ import pickle
 import store
 
 from IPython.display import HTML
+HOST = 'predictable.bom.gov.au'
 
-
-def leaflet(layer, cmap='elevation', vmin=0, vmax=1200, host="localhost"):
+def leaflet(layer, cmap='elevation', vmin=0, vmax=1200, host=HOST):
     """ Returns a HTML leaflet view """
 
     _ = store.create_layer(layer)
